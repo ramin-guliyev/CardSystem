@@ -13,7 +13,7 @@ public class CreateVendorDto
     public string Name { get; set; }
     public string Email { get; set; }
     public string Phone { get; set; }
-    public ICollection<CreateAccountDto> Addresses { get; set; }
+    public List<CreateAddressDto> Addresses { get; set; }
 }
 public class CreateAddressDto
 {

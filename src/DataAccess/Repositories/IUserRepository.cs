@@ -9,8 +9,8 @@ public interface IUserRepository
     Task<IEnumerable<UserResponse>> GetUsersAsync();
     Task<UserResponse>GetUserAsync(int id);
     Task<bool> RegisterAsync(RegisterDto model);
-    Task<bool> ChangeUserNameAsync(ChangeUserNameDto model);
-    Task ForgotPassword(ForgotPasswordDto model);
+    Task<bool> ChangeUserNameAsync(int id,ChangeUserNameDto model);
+    Task<string> ForgotPassword(ForgotPasswordDto model);
     Task<bool> ResetPassword(ResetPasswordDto model);
     Task Logout();
 }
