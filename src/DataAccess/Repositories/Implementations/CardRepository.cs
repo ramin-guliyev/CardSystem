@@ -85,7 +85,7 @@ internal class CardRepository : ICardRepository
         if (card is null)
             throw new Exception("Invalid operation");
 
-        card.User = null;
+        card.UserId = null;
         return await _context.SaveChangesAsync() > 0;
     }
 }

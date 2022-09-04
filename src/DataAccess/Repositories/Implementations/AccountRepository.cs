@@ -24,11 +24,11 @@ internal class AccountRepository : IAccountRepository
         {
             Balance = model.Balance,
             Type = model.Type,
-            User = new User { Id = userId }
+            UserId = userId
         };
 
         _context.Accounts.Add(account);
-        if(await _context.SaveChangesAsync()>0)
+        if (await _context.SaveChangesAsync() > 0)
             return _mapper.Map<AccountResponse>(account);
 
         throw new Exception("Something went wrong");
@@ -36,8 +36,8 @@ internal class AccountRepository : IAccountRepository
 
     public async Task<bool> DeleteAsync(int userId, int accountId)
     {
-        var deletedEntity =await _context.Accounts
-            .Where(x=>x.User.Id==userId).FirstOrDefaultAsync(x=>x.Id ==accountId);
+        var deletedEntity = await _context.Accounts
+            .Where(x => x.User.Id == userId).FirstOrDefaultAsync(x => x.Id == accountId);
         if (deletedEntity is null)
             throw new Exception("Invalid operation");
         _context.Accounts.Remove(deletedEntity);

@@ -9,5 +9,6 @@ public class Card : BaseEntity
     public CardState State { get; set; }
     public CardType Type { get; set; }
     public CardCurrency Currency { get; set; }
-    public User User { get; set; }
+    public User? User { get; set; }
+    public int? UserId { get; set; }
 }

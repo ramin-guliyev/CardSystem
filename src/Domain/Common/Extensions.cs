@@ -1,15 +1,16 @@
-﻿using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Domain.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Domain.Data;
+namespace Domain.Common;
 
 public static class Extensions
 {
-    public static IServiceCollection AddAppDbContext(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDomain(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddAutoMapper(typeof(MarkerClass));
+
         var connectionString = configuration.GetConnectionString("App") ??
             throw new InvalidOperationException("Missing connection string. Please specify it under the ConnectionStrings:App config section.");
 

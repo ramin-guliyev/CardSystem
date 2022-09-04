@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,12 +17,12 @@ namespace DataAccess.Repositories.Implementations;
 internal class UserRepository : IUserRepository
 {
     private readonly UserManager<User> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<IdentityRole<int>> _roleManager;
     private readonly SignInManager<User> _signInManager;
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
     private readonly IConfiguration _configuration;
-    public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext context, IMapper mapper, IConfiguration configuration)
+    public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole<int>> roleManager, AppDbContext context, IMapper mapper, IConfiguration configuration)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -119,7 +120,7 @@ internal class UserRepository : IUserRepository
     public async Task<bool> RegisterAsync(RegisterDto model)
     {
         var isUserAnyUser = await _userManager.FindByNameAsync(model.UserName);
-        if (isUserAnyUser is null)
+        if (isUserAnyUser is not  null)
             throw new Exception("UserName already taken");
 
         User user = new()
@@ -130,6 +131,7 @@ internal class UserRepository : IUserRepository
             Email = model.UserName
         };
         var result = await _userManager.CreateAsync(user, model.Password);
+        await _userManager.AddToRoleAsync(user, "User");
 
         return result.Succeeded;
     }
