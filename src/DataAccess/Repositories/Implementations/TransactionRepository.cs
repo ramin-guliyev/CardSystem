@@ -38,7 +38,7 @@ internal class TransactionRepository : ITransactionRepository
             CardNumber = model.CardNumber,
             Date = DateTime.UtcNow,
             Type = TransactionType.Normal,
-            User = new() { Id = userId },
+            UserId = userId,
             Vendor = new Vendor
             {
                 Email = model.Vendor.Email,
@@ -55,9 +55,9 @@ internal class TransactionRepository : ITransactionRepository
                 ZipCode = x.ZipCode
             }));
         _context.Add(transaction);
+
         if (await _context.SaveChangesAsync() > 0)
             return _mapper.Map<TransactionResponse>(transaction);
-
         throw new Exception("Something went wrong");
     }
 

@@ -1,12 +1,14 @@
 ﻿using DataAccess.Repositories;
 using Domain.Common.DTOs;
 using Domain.Common.DTOs.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebUI.Helpers.Extensions;
 
 namespace WebUI.Controllers;
 
+[Authorize(Roles ="User")]
 [Route("api/[controller]")]
 [ApiController]
 public class TransactionsController : ControllerBase

@@ -9,5 +9,6 @@ public class Transaction : BaseEntity
     public decimal Amount { get; set; }
     public string CardNumber { get; set; }
     public User User { get; set; }
+    public int UserId { get; set; }
     public Vendor Vendor { get; set; }
 }

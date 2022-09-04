@@ -8,7 +8,7 @@ using WebUI.Helpers.Extensions;
 
 namespace WebUI.Controllers;
 
-[Authorize]
+[Authorize(Roles ="User")]
 [Route("api/[controller]")]
 [ApiController]
 public class AccountsController : ControllerBase

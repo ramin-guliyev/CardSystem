@@ -4,6 +4,8 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
 using WebUI.Helpers.Extensions;
+using WebUI.Helpers.Middlewares;
+using WebUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +16,11 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddDataAccess();
     builder.Services.AddCustomIdentity(builder.Configuration);
     builder.Services.AddAuthSwagger();
+    builder.Services.AddScoped<IMailService, DummyEmailService>();
 }
 var app = builder.Build();
 {
+    app.UseMiddleware<ExceptionMiddleware>();
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
@@ -39,10 +43,7 @@ var app = builder.Build();
 
             DataAccess.Extensions.SeedData(userManager, roleManager);
         }
-        catch
-        {
-
-        }
+        catch{}
     }
     app.Run();
 }
